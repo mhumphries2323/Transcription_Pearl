@@ -94,7 +94,12 @@ Under the following terms:
 
 If you use this software in your research, please cite:
 ```
-[Citation information to be added]
+Mark Humphries, 2024. Transcription Pearl 0.9 Beta. Department of History: Wilfrid Laurier University.
+```
+
+If you wish to cite the paper that explores this research cite:
+```
+Mark Humphries, Lianne C. Leddy, Quinn Downton, Meredith Legace, John McConnell, Isabella Murray, and Elizabeth Spence. Unlocking the Archives: Using Large Language Models to Transcribe Handwritten Historical Documents. Preprint: xxx.
 ```
 
 ## Author
