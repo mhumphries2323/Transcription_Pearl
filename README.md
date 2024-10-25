@@ -1,4 +1,3 @@
-```markdown
 # Transcription Pearl
 
 A Python-based GUI application for transcribing and processing images containing historical handwritten text using Large Language Models (LLMs) via API services (OpenAI, Google, and Anthropic APIs). Designed for academic and research purposes.
