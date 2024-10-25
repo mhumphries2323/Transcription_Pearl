@@ -18,6 +18,10 @@ Transcription Pearl helps researchers process and transcribe image-based documen
 - Progress tracking
 - Multiple text draft versions
 
+## Beta Version Notes
+
+This version does not currently include support for ImageSplitter which is a sub-utility that can split and crop images for pre-processing. It will be included in the next version.
+
 ## Prerequisites
 
 - Python 3.8+
