@@ -2,6 +2,12 @@
 
 A Python-based GUI application for transcribing and processing images containing historical handwritten text using Large Language Models (LLMs) via API services (OpenAI, Google, and Anthropic APIs). Designed for academic and research purposes.
 
+## Recent Updates: 08 November 2024
+
+There was an issue with the prompts file that was preventing the transcribed text from being sent to the correction function. The prompt was missing the {text_to_process} placeholder. That has now been fixed.
+
+PDFs were also being imported at 72 DPI and this has been changed to 300 DPI which should improve readability.
+
 ## Overview
 
 Transcription Pearl helps researchers process and transcribe image-based documents using various AI services. It provides a user-friendly interface for managing transcription projects and leverages multiple AI providers for optimal results.
