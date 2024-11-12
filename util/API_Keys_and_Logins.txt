@@ -1,8 +1,0 @@
-OpenAI_API_Key:
-OpenAI_Usage_Tier: 
-Anthropic_API_Key: 
-Anthropic_Usage_Tier:
-Google_Project_ID:
-Google_Location:
-Google_Rate_Limit:
-Google_API_Key:
