@@ -76,7 +76,7 @@ git clone [repository-url]
 pip install -r requirements.txt
 ```
 
-3. Configure API keys in `util/API_Keys_and_Logins.txt`
+3. Configure API keys in the Settings menu.
 
 ## Usage
 
