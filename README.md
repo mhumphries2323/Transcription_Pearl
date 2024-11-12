@@ -2,6 +2,10 @@
 
 A Python-based GUI application for transcribing and processing images containing historical handwritten text using Large Language Models (LLMs) via API services (OpenAI, Google, and Anthropic APIs). Designed for academic and research purposes.
 
+## Manual
+
+There is also a Transcription Pearl Manual available in the repository in PDF format with instructions on how to get and insert API keys as well as information on the various commands and functions.
+
 ## Recent Updates: 11 November 2024
 
 MAJOR UPDATE: 1.0 beta Release
