@@ -6,7 +6,13 @@ A Python-based GUI application for transcribing and processing images containing
 
 MAJOR UPDATE: 1.0 beta Release
 
-- Includes 
+- Includes Image Preprocessing Utility
+- Includes better functionality for storing settings
+- Drag and drop functionality for PDFs
+- Automatic rotation of photographs captured with phone cameras
+- Ability to manually rotate images
+- Ability to manually delete images
+- Resizable image and text windows
 
 08 November 2024
 
