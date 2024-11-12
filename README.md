@@ -2,7 +2,13 @@
 
 A Python-based GUI application for transcribing and processing images containing historical handwritten text using Large Language Models (LLMs) via API services (OpenAI, Google, and Anthropic APIs). Designed for academic and research purposes.
 
-## Recent Updates: 08 November 2024
+## Recent Updates: 11 November 2024
+
+MAJOR UPDATE: 1.0 beta Release
+
+- Includes 
+
+08 November 2024
 
 There was an issue with the prompts file that was preventing the transcribed text from being sent to the correction function. The prompt was missing the {text_to_process} placeholder. That has now been fixed.
 
