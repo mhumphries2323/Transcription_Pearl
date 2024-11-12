@@ -13,6 +13,7 @@ MAJOR UPDATE: 1.0 beta Release
 - Ability to manually rotate images
 - Ability to manually delete images
 - Resizable image and text windows
+- New requirements text (adds opencv-python==4.10.0.84)
 
 08 November 2024
 
