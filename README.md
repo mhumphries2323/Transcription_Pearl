@@ -19,7 +19,7 @@ MAJOR UPDATE: 1.0 beta Release
 - Resizable image and text windows
 - New requirements text (adds opencv-python==4.10.0.84)
 
-08 November 2024
+Previous Update: 08 November 2024
 
 There was an issue with the prompts file that was preventing the transcribed text from being sent to the correction function. The prompt was missing the {text_to_process} placeholder. That has now been fixed.
 
@@ -40,10 +40,7 @@ Transcription Pearl helps researchers process and transcribe image-based documen
 - Find and replace functionality
 - Progress tracking
 - Multiple text draft versions
-
-## Beta Version Notes
-
-This version does not currently include support for ImageSplitter which is a sub-utility that can split and crop images for pre-processing. It will be included in the next version.
+- Image Pre-Processsing Tool
 
 ## Prerequisites
 
@@ -68,7 +65,7 @@ This version does not currently include support for ImageSplitter which is a sub
 
 1. Clone the repository
 ```bash
-git clone [repository-url]
+git clone https://github.com/mhumphries2323/Transcription_Pearl
 ```
 
 2. Install required packages
@@ -82,7 +79,7 @@ pip install -r requirements.txt
 
 Launch the application:
 ```bash
-python main.py
+python TranscriptionPearl_beta-2024111.py
 ```
 
 Basic workflow:
