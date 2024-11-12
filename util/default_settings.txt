@@ -1,2 +1,0 @@
-Prompts_File: util/prompts.csv
-API_Keys_and_Logins_File: util/API_Keys_and_Logins.txt
