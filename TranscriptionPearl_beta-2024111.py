@@ -43,7 +43,7 @@ class App(TkinterDnD.Tk):
         self.find_replace_toggle = False
         self.original_image = None
         self.photo_image = None
-        self.current_scale = 1    
+        self.current_scale = 1
 
         self.grid_columnconfigure(0, weight=1)
         self.grid_rowconfigure(0, weight=0)  # Top frame
@@ -52,7 +52,7 @@ class App(TkinterDnD.Tk):
 
         self.top_frame = tk.Frame(self)
         self.top_frame.grid(row=0, column=0, sticky="nsew")
- 
+
         self.top_frame.grid_columnconfigure(0, weight=0)
         self.top_frame.grid_columnconfigure(1, weight=1)
         self.top_frame.grid_columnconfigure(2, weight=0)
@@ -120,10 +120,10 @@ class App(TkinterDnD.Tk):
         textbox_frame.grid_rowconfigure(0, weight=1)
         textbox_frame.grid_rowconfigure(1, weight=1)
         textbox_frame.grid_rowconfigure(2, weight=1)
-       
-        # Initialize initial settings 
+
+        # Initialize initial settings
         self.initialize_temp_directory()
-        self.enable_drag_and_drop() 
+        self.enable_drag_and_drop()
         self.create_menus()
         self.create_key_bindings()
         self.bind_key_universal_commands(self.text_display)
@@ -132,7 +132,7 @@ class App(TkinterDnD.Tk):
     def create_menus(self):
         self.menu_bar = tk.Menu(self)
         self.config(menu=self.menu_bar)
-        
+
         self.file_menu = tk.Menu(self.menu_bar, tearoff=0)
         self.menu_bar.add_cascade(label="File", menu=self.file_menu)
 
@@ -141,14 +141,14 @@ class App(TkinterDnD.Tk):
 
         self.process_menu = tk.Menu(self.menu_bar, tearoff=0)
         self.menu_bar.add_cascade(label="Process", menu=self.process_menu)
-        
+
         self.file_menu.add_command(label="New Project", command=self.create_new_project)
         self.file_menu.add_command(label="Open Project", command=self.open_project)
         self.file_menu.add_command(label="Save Project As...", command=self.save_project_as)
         self.file_menu.add_command(label="Save Project", command=self.save_project)
         self.file_menu.add_separator()
-        self.file_menu.add_command(label="Import Images Only", command=lambda: self.open_folder(toggle="Images without Text"))        
-        self.file_menu.add_command(label="Import Text and Images", command=lambda: self.open_folder(toggle="Images with Text"))        
+        self.file_menu.add_command(label="Import Images Only", command=lambda: self.open_folder(toggle="Images without Text"))
+        self.file_menu.add_command(label="Import Text and Images", command=lambda: self.open_folder(toggle="Images with Text"))
         self.file_menu.add_command(label="Import PDF", command=self.open_pdf)
 
         self.file_menu.add_separator()
@@ -193,8 +193,8 @@ class App(TkinterDnD.Tk):
         self.edit_menu.add_separator()
         self.edit_menu.add_command(label="Delete Current Image", command=self.delete_current_image)
 
-        self.process_menu.add_command(label="Recognize Text on Current Page", command=lambda: self.ai_function(all_or_one_flag="Current Page", ai_job="HTR"))        
-        self.process_menu.add_command(label="Recognize Text on All Pages", command=lambda: self.ai_function(all_or_one_flag="All Pages", ai_job="HTR")) 
+        self.process_menu.add_command(label="Recognize Text on Current Page", command=lambda: self.ai_function(all_or_one_flag="Current Page", ai_job="HTR"))
+        self.process_menu.add_command(label="Recognize Text on All Pages", command=lambda: self.ai_function(all_or_one_flag="All Pages", ai_job="HTR"))
 
         self.process_menu.add_separator()
 
@@ -272,7 +272,7 @@ class App(TkinterDnD.Tk):
         text_display = tk.Text(frame, wrap="word", state=state, undo=True)
         # Make the font size 16
         text_display.config(font=("Arial", 12))
-        
+
         text_display.grid(sticky="nsew")
 
         return text_display
@@ -285,26 +285,26 @@ class App(TkinterDnD.Tk):
 
 # Initialize Settings Functions
 
-    def initialize_settings(self):   
+    def initialize_settings(self):
         # Get the appropriate app data directory
         if os.name == 'nt':  # Windows
             app_data = os.path.join(os.environ['APPDATA'], 'TranscriptionPearl')
         else:  # Linux/Mac
             app_data = os.path.join(os.path.expanduser('~'), '.transcriptionpearl')
-        
+
         # Create the directory if it doesn't exist
         os.makedirs(app_data, exist_ok=True)
-        
+
         # Define settings file path
         self.settings_file_path = os.path.join(app_data, 'settings.json')
-        
+
         # Initialize other settings...
-        self.main_df = pd.DataFrame(columns=["Index", "Page", "Original_Text", "Initial_Draft_Text", 
+        self.main_df = pd.DataFrame(columns=["Index", "Page", "Original_Text", "Initial_Draft_Text",
                                         "Final_Draft", "Image_Path", "Text_Path", "Text_Toggle"])
-        
+
         # First set default values
         self.restore_defaults()
-        
+
         # Define model list
         self.model_list = [
             "gpt-4o",
@@ -324,7 +324,7 @@ class App(TkinterDnD.Tk):
         # Check if settings file exists and load it
         if os.path.exists(self.settings_file_path):
             self.load_settings()
-  
+
     def initialize_temp_directory(self):
         self.temp_directory = os.path.join(os.path.dirname(os.path.abspath(__file__)), "util", "temp")
         self.images_directory = os.path.join(self.temp_directory, "images")
@@ -392,7 +392,7 @@ class App(TkinterDnD.Tk):
 
         # Right frame
         self.show_settings("General Settings", right_frame)
-    
+
     def show_settings(self, option, frame):
         for widget in frame.winfo_children():
             widget.destroy()
@@ -419,7 +419,7 @@ class App(TkinterDnD.Tk):
             self.openai_entry.insert(0, self.openai_api_key)
             self.openai_entry.grid(row=0, column=1, columnspan=3, padx=10, pady=5, sticky="w")
             self.openai_entry.bind("<KeyRelease>", lambda event: setattr(self, 'openai_api_key', self.openai_entry.get()))
-    
+
             # Anthropic
             anthropic_label = tk.Label(frame, text="Anthropic API Key:")
             anthropic_label.grid(row=4, column=0, padx=10, pady=5, sticky="w")
@@ -439,9 +439,9 @@ class App(TkinterDnD.Tk):
 
     def show_HTR_settings(self, frame):
         explanation_label = tk.Label(frame, text=f"""The HTR function sends each image to the API simultaneously and asks it to transcribe the material.""", wraplength=675, justify=tk.LEFT)
-       
+
         explanation_label.grid(row=0, column=0, columnspan=3, padx=10, pady=5, sticky="w")
-        
+
         model_label = tk.Label(frame, text="Select model for HTR:")
         model_label.grid(row=1, column=0, padx=10, pady=5, sticky="w")
         self.HTR_model_var = tk.StringVar(value=self.HTR_model)
@@ -480,14 +480,14 @@ class App(TkinterDnD.Tk):
         self.val_label_entry.insert(tk.END, self.HTR_val_text)
         self.val_label_entry.grid(row=4, column=1, padx=10, pady=5, sticky="w")
         self.val_label_entry.bind("<KeyRelease>", lambda event: setattr(self, 'HTR_val_text', self.HTR_val_text.get("1.0", tk.END)))
-    
+
         self.HTR_general_entry.bind("<KeyRelease>", lambda event: setattr(self, 'HTR_system_prompt', self.HTR_general_entry.get("1.0", "end-1c")))
         self.HTR_detailed_entry.bind("<KeyRelease>", lambda event: setattr(self, 'HTR_user_prompt', self.HTR_detailed_entry.get("1.0", "end-1c")))
         self.val_label_entry.bind("<KeyRelease>", lambda event: setattr(self, 'HTR_val_text', self.val_label_entry.get("1.0", "end-1c")))
 
     def show_correct_text_settings(self, frame):
         explanation_label = tk.Label(frame, text=f"""The main function processes each page of text and the corresponding image and by default is used to correct an initially HTRed text.""", wraplength=675, justify=tk.LEFT)
-       
+
         explanation_label.grid(row=0, column=0, columnspan=3, padx=10, pady=5, sticky="w")
 
         model_label = tk.Label(frame, text="Model:")
@@ -525,7 +525,7 @@ class App(TkinterDnD.Tk):
         self.val_label_entry.insert(tk.END, self.correct_val_text)
         self.val_label_entry.grid(row=5, column=1, padx=10, pady=5, sticky="w")
         self.val_label_entry.bind("<KeyRelease>", lambda event: setattr(self, 'correct_text_val_text_a', self.val_label_entry.get("1.0", tk.END)))
-       
+
         self.main_general_entry.bind("<KeyRelease>", lambda event: setattr(self, 'correct_system_prompt', self.main_general_entry.get("1.0", "end-1c")))
         self.main_detailed_entry.bind("<KeyRelease>", lambda event: setattr(self, 'correct_user_prompt', self.main_detailed_entry.get("1.0", "end-1c")))
         self.val_label_entry.bind("<KeyRelease>", lambda event: setattr(self, 'correct_val_text', self.val_label_entry.get("1.0", "end-1c")))
@@ -537,32 +537,32 @@ class App(TkinterDnD.Tk):
             'HTR_user_prompt': self.HTR_user_prompt,
             'HTR_val_text': self.HTR_val_text,
             'HTR_model': self.HTR_model,
-            
+
             # Correct Text Settings
             'correct_system_prompt': self.correct_system_prompt,
             'correct_user_prompt': self.correct_user_prompt,
             'correct_val_text': self.correct_val_text,
             'correct_model': self.correct_model,
-            
+
             # API Keys
             'openai_api_key': self.openai_api_key,
             'anthropic_api_key': self.anthropic_api_key,
             'google_api_key': self.google_api_key,
-            
+
             # Model List
             'model_list': self.model_list
         }
-        
+
         try:
             with open(self.settings_file_path, 'w') as f:
                 json.dump(settings, f, indent=4)
-            
+
             # Check if settings window exists before showing the message
             if hasattr(self, 'settings_window') and self.settings_window.winfo_exists():
                 messagebox.showinfo("Success", "Settings saved successfully!", parent=self.settings_window)
             else:
                 messagebox.showinfo("Success", "Settings saved successfully!")
-                
+
         except Exception as e:
             if hasattr(self, 'settings_window') and self.settings_window.winfo_exists():
                 messagebox.showerror("Error", f"Failed to save settings: {e}", parent=self.settings_window)
@@ -573,24 +573,24 @@ class App(TkinterDnD.Tk):
         try:
             with open(self.settings_file_path, 'r') as f:
                 settings = json.load(f)
-                
+
             # HTR Settings
             self.HTR_system_prompt = settings.get('HTR_system_prompt', self.HTR_system_prompt)
             self.HTR_user_prompt = settings.get('HTR_user_prompt', self.HTR_user_prompt)
             self.HTR_val_text = settings.get('HTR_val_text', self.HTR_val_text)
             self.HTR_model = settings.get('HTR_model', self.HTR_model)
-            
+
             # Correct Text Settings
             self.correct_system_prompt = settings.get('correct_system_prompt', self.correct_system_prompt)
             self.correct_user_prompt = settings.get('correct_user_prompt', self.correct_user_prompt)
             self.correct_val_text = settings.get('correct_val_text', self.correct_val_text)
             self.correct_model = settings.get('correct_model', self.correct_model)
-            
+
             # API Keys
             self.openai_api_key = settings.get('openai_api_key', '')
             self.anthropic_api_key = settings.get('anthropic_api_key', '')
             self.google_api_key = settings.get('google_api_key', '')
-            
+
             # Model List
             self.model_list = settings.get('model_list', self.model_list)
 
@@ -599,24 +599,24 @@ class App(TkinterDnD.Tk):
                 self.show_settings("APIs and Login Settings", self.settings_window.winfo_children()[1])
                 self.show_settings("HTR Settings", self.settings_window.winfo_children()[1])
                 self.show_settings("Correct Text Settings", self.settings_window.winfo_children()[1])
-                
+
         except FileNotFoundError:
             self.restore_defaults()
         except Exception as e:
             messagebox.showerror("Error", f"Failed to load settings: {e}")
-    
+
     def restore_defaults(self):
         self.HTR_system_prompt = '''Your task is to accurately transcribe handwritten historical documents, minimizing the CER and WER. Work character by character, word by word, line by line, transcribing the text exactly as it appears on the page. To maintain the authenticity of the historical text, retain spelling errors, grammar, syntax, and punctuation as well as line breaks. Transcribe all the text on the page including headers, footers, marginalia, insertions, page numbers, etc. If these are present, insert them where indicated by the author (as applicable). In your response, write: "Transcription:" followed only by your accurate transcription'''
-        
+
         self.HTR_user_prompt = '''Carefully transcribe this page from an 18th/19th century document. In your response, write: "Transcription:" followed only by your accurate transcription.'''
-        
+
         self.HTR_val_text = "Transcription:"
         self.HTR_model = "gemini-1.5-pro-002"
 
         self.correct_system_prompt = '''Your task is to compare handwritten pages of text with corresponding draft transcriptions, correcting the transcription to produce an accurate, publishable transcript. Be sure that the spelling, syntax, punctuation, and line breaks in the transcription match those on the handwritten page to preserve the historical integrity of the document. Numbers also easily misread, so pay close attention to digits. You must also ensure that the transcription begins and ends in the same place as the handwritten document. Include any catchwords at the bottom of the page. In your response write "Corrected Transcript:" followed by your corrected transcription.'''
-        
+
         self.correct_user_prompt = '''Your task is to use the handwritten page image to correct the following transcription, retaining the spelling, syntax, punctuation, line breaks, catchwords, etc of the original.\n\n{text_to_process}'''
-        
+
         self.correct_val_text = "Corrected Transcript:"
         self.correct_model = "claude-3-5-sonnet-20240620"
 
@@ -635,10 +635,11 @@ class App(TkinterDnD.Tk):
             "gemini-1.5-pro-002"
         ]
 
-        self.openai_api_key = ""
-        self.anthropic_api_key = ""
-        self.google_api_key = ""
-        
+        # Don't overwrite these if they are set
+        self.openai_api_key = self.openai_api_key if hasattr(self, 'openai_api_key') else ""
+        self.anthropic_api_key = self.anthropic_api_key if hasattr(self, 'anthropic_api_key') else ""
+        self.google_api_key = self.google_api_key if hasattr(self, 'google_api_key') else ""
+
     def on_settings_window_close(self, window):
         self.toggle_button_state()
         window.destroy()
@@ -713,17 +714,17 @@ class App(TkinterDnD.Tk):
 
     def scroll(self, event):
         self.image_display.yview_scroll(int(-1*(event.delta/120)), "units")
-    
+
     def load_image(self, image_path):
         # Load the image
         self.original_image = Image.open(image_path)
-        
+
         # Apply the current scale to the image
         original_width, original_height = self.original_image.size
         new_width = int(original_width * self.current_scale)
         new_height = int(original_height * self.current_scale)
         self.original_image = self.original_image.resize((new_width, new_height), Image.LANCZOS)
-        
+
         self.photo_image = ImageTk.PhotoImage(self.original_image)
 
         # Update the canvas item
@@ -735,32 +736,32 @@ class App(TkinterDnD.Tk):
 
     def encode_image(self, image_path):
         with open(image_path, "rb") as image_file:
-            return base64.b64encode(image_file.read()).decode('utf-8')   
+            return base64.b64encode(image_file.read()).decode('utf-8')
 
     def resize_image(self, image_path, output_path, max_size=1980):
         with Image.open(image_path) as img:
-           
+
             # Get the original image size
             width, height = img.size
-            
+
             # Determine the larger dimension
             larger_dimension = max(width, height)
-            
+
             # Calculate the scaling factor
             scale = max_size / larger_dimension
-            
+
             # Calculate new dimensions
             new_width = int(width * scale)
             new_height = int(height * scale)
-            
+
             # Resize the image
             img = img.resize((new_width, new_height), Image.LANCZOS)
 
             img = ImageOps.exif_transpose(img)
-            
+
             # Save the image with high quality
             img.save(output_path, "JPEG", quality=95)
-    
+
     def process_new_images(self, source_paths):
         successful_copies = 0
         for source_path in source_paths:
@@ -768,15 +769,15 @@ class App(TkinterDnD.Tk):
             file_extension = os.path.splitext(source_path)[1].lower()
             new_file_name = f"{new_index+1:04d}_p{new_index+1:03d}{file_extension}"
             dest_path = os.path.join(self.images_directory, new_file_name)
-            
+
             try:
                 # Instead of directly copying, resize and save the image
-                self.resize_image(source_path, dest_path)                
+                self.resize_image(source_path, dest_path)
                 text_file_name = f"{new_index+1:04d}_p{new_index+1:03d}.txt"
                 text_file_path = os.path.join(self.images_directory, text_file_name)
                 with open(text_file_path, "w", encoding='utf-8') as f:
                     f.write("")
-                
+
                 new_row = pd.DataFrame({
                     "Index": [new_index],
                     "Page": [f"{new_index+1:04d}_p{new_index+1:03d}"],
@@ -809,7 +810,7 @@ class App(TkinterDnD.Tk):
 
         try:
             current_index = self.page_counter
-            
+
             # Store the path of files to be deleted
             image_to_delete = self.main_df.loc[current_index, 'Image_Path']
             text_to_delete = self.main_df.loc[current_index, 'Text_Path']
@@ -830,28 +831,28 @@ class App(TkinterDnD.Tk):
             for idx in range(len(self.main_df)):
                 # Update Index
                 self.main_df.at[idx, 'Index'] = idx
-                
+
                 # Create new page number
                 new_page = f"{idx+1:04d}_p{idx+1:03d}"
                 self.main_df.at[idx, 'Page'] = new_page
-                
+
                 # Get old file paths
                 old_image_path = self.main_df.loc[idx, 'Image_Path']
                 old_text_path = self.main_df.loc[idx, 'Text_Path']
-                
+
                 # Create new file paths
                 new_image_name = f"{idx+1:04d}_p{idx+1:03d}{os.path.splitext(old_image_path)[1]}"
                 new_text_name = f"{idx+1:04d}_p{idx+1:03d}.txt"
-                
+
                 new_image_path = os.path.join(os.path.dirname(old_image_path), new_image_name)
                 new_text_path = os.path.join(os.path.dirname(old_text_path), new_text_name)
-                
+
                 # Rename files
                 if os.path.exists(old_image_path):
                     os.rename(old_image_path, new_image_path)
                 if os.path.exists(old_text_path):
                     os.rename(old_text_path, new_text_path)
-                
+
                 # Update paths in DataFrame
                 self.main_df.at[idx, 'Image_Path'] = new_image_path
                 self.main_df.at[idx, 'Text_Path'] = new_text_path
@@ -859,7 +860,7 @@ class App(TkinterDnD.Tk):
             # Adjust page counter if necessary
             if current_index >= len(self.main_df):
                 self.page_counter = len(self.main_df) - 1
-            
+
             # Refresh display
             if not self.main_df.empty:
                 self.load_image(self.main_df.loc[self.page_counter, 'Image_Path'])
@@ -898,7 +899,7 @@ class App(TkinterDnD.Tk):
             original_width, original_height = self.original_image.size
             new_width = int(original_width * self.current_scale)
             new_height = int(original_height * self.current_scale)
-            
+
             resized_image = self.original_image.resize((new_width, new_height), Image.LANCZOS)
             self.photo_image = ImageTk.PhotoImage(resized_image)
 
@@ -912,46 +913,46 @@ class App(TkinterDnD.Tk):
             self.error_logging(f"Error in rotate_image: {str(e)}")
 
 # File Functions
-    
+
     def reset_application(self):
         # Clear the main DataFrame
         self.main_df = pd.DataFrame(columns=["Index", "Page", "Original_Text", "Initial_Draft_Text", "Final_Draft", "Image_Path", "Text_Path", "Text_Toggle"])
-        
+
         # Reset page counter
         self.page_counter = 0
-               
+
         # Reset flags
         self.save_toggle = False
         self.find_replace_toggle = False
-        
+
         # Clear text displays
         self.text_display.delete("1.0", tk.END)
-        
+
         # Clear image display
         self.image_display.delete("all")
         self.current_image_path = None
         self.original_image = None
         self.photo_image = None
-        
+
         # Reset zoom and pan
         self.current_scale = 1
-        
+
         # Reset counter
         self.counter_update()
-        
+
         # Clear project and image directories
         self.initialize_temp_directory()
-                        
+
         # Clear the find and replace matches DataFrame
         self.find_replace_matches_df = pd.DataFrame(columns=["Index", "Page"])
-        
+
         # Update the display
         self.text_type_label.config(text="None")
-        
+
     def create_new_project(self):
         if not messagebox.askyesno("New Project", "Creating a new project will reset the current application state. This action cannot be undone. Are you sure you want to proceed?"):
             return  # User chose not to proceed
-        
+
         # Reset the application
         self.reset_application()
 
@@ -978,7 +979,7 @@ class App(TkinterDnD.Tk):
             # Update text files with current content
             for index, row in self.main_df.iterrows():
                 text_path = row['Text_Path']
-                
+
                 # Determine which text to save based on the Text_Toggle
                 if row['Text_Toggle'] == 'Final Draft':
                     text_content = row['Final_Draft']
@@ -1015,23 +1016,23 @@ class App(TkinterDnD.Tk):
         try:
             # Read the PBF file
             self.main_df = pd.read_csv(pbf_file, encoding='utf-8')
-            
+
             # Ensure text columns are of type 'object' (string)
             text_columns = ['Original_Text', 'Initial_Draft_Text', 'Final_Draft', 'Text_Toggle']
             for col in text_columns:
                 if col in self.main_df.columns:
                     self.main_df[col] = self.main_df[col].astype('object')
-            
+
             # Update the project directory
             self.project_directory = project_directory
             self.images_directory = images_directory
-            
+
             # Reset the page counter and load the first image/text
             self.page_counter = 0
             self.load_image(self.main_df.loc[0, 'Image_Path'])
             self.load_text()
             self.counter_update()
-            
+
             messagebox.showinfo("Success", "Project loaded successfully.")
         except Exception as e:
             messagebox.showerror("Error", f"Failed to open project: {e}")
@@ -1080,14 +1081,14 @@ class App(TkinterDnD.Tk):
                 new_image_filename = os.path.basename(old_image_path)
                 new_image_path = os.path.join(images_directory, new_image_filename)
                 self.resize_image(old_image_path, new_image_path)
-                
+
                 # Update the image path in the DataFrame
                 self.main_df.at[index, 'Image_Path'] = new_image_path
 
                 # Handle text file
                 text_filename = os.path.splitext(new_image_filename)[0] + '.txt'
                 new_text_path = os.path.join(images_directory, text_filename)
-                
+
                 # Check if there's existing text content
                 text_content = row.get('Original_Text', '')
                 if not text_content:
@@ -1115,7 +1116,7 @@ class App(TkinterDnD.Tk):
             self.main_df.to_csv(pbf_file, index=False, encoding='utf-8')
 
             messagebox.showinfo("Success", f"Project saved successfully to {project_directory}")
-            
+
             # Update the project directory
             self.project_directory = project_directory
             self.images_directory = images_directory
@@ -1157,14 +1158,14 @@ class App(TkinterDnD.Tk):
                     new_image_filename = os.path.basename(old_image_path)
                     new_image_path = os.path.join(images_directory, new_image_filename)
                     shutil.copy2(old_image_path, new_image_path)
-                    
+
                     # Update the image path in the DataFrame
                     self.main_df.at[index, 'Image_Path'] = new_image_path
 
                     # Handle text file
                     text_filename = os.path.splitext(new_image_filename)[0] + '.txt'
                     new_text_path = os.path.join(images_directory, text_filename)
-                    
+
                     # Check if there's existing text content
                     text_content = row.get('Original_Text', '')
                     if not text_content:
@@ -1195,7 +1196,7 @@ class App(TkinterDnD.Tk):
                 self.main_df.to_csv(pbf_file, index=False, encoding='utf-8')
 
                 messagebox.showinfo("Success", f"Project saved successfully to {project_directory}")
-                
+
                 # Update the project directory
                 self.project_directory = project_directory
                 self.images_directory = images_directory
@@ -1267,23 +1268,23 @@ class App(TkinterDnD.Tk):
         finally:
             self.enable_drag_and_drop()
 
- # Utility Functions   
+ # Utility Functions
 
     def copy(self):
-        self.text_display.event_generate("<<Copy>>")   
-    
+        self.text_display.event_generate("<<Copy>>")
+
     def cut(self):
         self.text_display.event_generate("<<Cut>>")
-    
+
     def paste(self):
         self.text_display.event_generate("<<Paste>>")
-    
+
     def undo(self, event):
         try:
             self.text_display.edit_undo()
         except tk.TclError:
             pass
-    
+
     def redo(self, event):
         try:
             self.text_display.edit_redo()
@@ -1309,9 +1310,9 @@ class App(TkinterDnD.Tk):
             self.text_type_label.config(text="No Text")
 
         return text
-    
+
     def toggle_button_state(self):
-                
+
         if self.button1['state'] == "normal" and self.button2['state'] == "normal" and self.button4['state'] == "normal" and self.button5['state'] == "normal":
             self.button1.config(state="disabled")
             self.button2.config(state="disabled")
@@ -1338,29 +1339,29 @@ class App(TkinterDnD.Tk):
     def format_pages(self, text):
         # Delete all newline characters
         text = text.replace("\n", " ")
-        
+
         # Add a space after each colon
         text = text.replace(":", ": ")
-        
+
         # Find any dates followed by a day of the week without a colon and insert a colon after the date
         text = re.sub(r"(\d{4}-\d{2}-\d{2}) (Mon|Tues|Wednes|Thurs|Fri|Satur|Sun)day([^:])", r"\1 \2day: \3", text)
-        
+
         # Find any dates followed by a day of the week and a colon, and insert two new line characters before the date
         text = re.sub(r"(\d{4}-\d{2}-\d{2}) (Mon|Tues|Wednes|Thurs|Fri|Satur|Sun)day:", r"\n\n\1 \2day:", text)
-        
+
         # Find any lines that end with a date followed by a day of the week and "to", and replace the newline characters that follow with a space
         text = re.sub(r"(\d{4}-\d{2}-\d{2}) (Mon|Tues|Wednes|Thurs|Fri|Satur|Sun)day to \n\n", r"\1 \2day to ", text)
-        
+
         # Find any double spaces and replace them with a single space
         text = re.sub(r"  ", " ", text)
-        
+
         # Remove ellipses and ** to ***** characters
-        text = re.sub(r"\.{3}|\*{2,5}|'{2,3}|`{2,5}", "", text) 
+        text = re.sub(r"\.{3}|\*{2,5}|'{2,3}|`{2,5}", "", text)
         return text
 
     def error_logging(self, error_message, additional_info=None):
         try:
-            error_logs_path = "util/error_logs.txt" 
+            error_logs_path = "util/error_logs.txt"
             with open(error_logs_path, "a", encoding='utf-8') as file:
                 log_message = f"{datetime.now().strftime('%Y-%m-%d %H:%M:%S')}: {error_message}"
                 if additional_info:
@@ -1368,13 +1369,13 @@ class App(TkinterDnD.Tk):
                 file.write(log_message + "\n")
         except Exception as e:
             print(f"Error logging failed: {e}")
-    
+
     def drop(self, event):
         file_paths = event.data
-        
+
         # Split the input string by spaces, but keep content within curly braces together
         file_paths = re.findall(r'\{[^}]*\}|\S+', file_paths)
-        
+
         valid_images = []
         pdf_files = []
         invalid_files = []
@@ -1382,7 +1383,7 @@ class App(TkinterDnD.Tk):
         for file_path in file_paths:
             # Remove curly braces and any quotation marks
             file_path = file_path.strip('{}').strip('"')
-            
+
             if os.path.isfile(file_path):
                 lower_path = file_path.lower()
                 if lower_path.endswith(('.jpg', '.jpeg')):
@@ -1413,7 +1414,7 @@ class App(TkinterDnD.Tk):
         # Process valid image files
         if valid_images:
             self.process_new_images(valid_images)
-            
+
             # Clean up temporary converted files
             for image_path in valid_images:
                 if image_path.endswith('_converted.jpg'):
@@ -1430,14 +1431,14 @@ class App(TkinterDnD.Tk):
                 except Exception as e:
                     print(f"Error processing PDF file {pdf_file}: {e}")
                     messagebox.showerror("Error", f"Failed to process PDF file {pdf_file}: {e}")
-        
+
         # Report invalid files
         if invalid_files:
             invalid_files_str = "\n".join(invalid_files)
             print(f"Invalid files: {invalid_files_str}")
-            messagebox.showwarning("Invalid Files", 
+            messagebox.showwarning("Invalid Files",
                 f"The following files were not processed because they are not valid image or PDF files:\n\n{invalid_files_str}")
-                            
+
     def refresh_display(self):
         if not self.main_df.empty:
             self.page_counter = len(self.main_df) - 1
@@ -1451,11 +1452,11 @@ class App(TkinterDnD.Tk):
             # Clear the text display
             self.text_display.delete("1.0", tk.END)
             self.counter_update()
-    
+
     def enable_drag_and_drop(self):
             self.drop_target_register(DND_FILES)
             self.dnd_bind('<<Drop>>', self.drop)
-    
+
 # Loading Functions
 
     def open_folder(self, toggle):
@@ -1546,13 +1547,13 @@ class App(TkinterDnD.Tk):
             self.people_and_places_flag = False
             # Initialize main_df with all required columns
             self.main_df = pd.DataFrame(columns=[
-                "Index", 
-                "Page", 
-                "Original_Text", 
-                "Initial_Draft_Text", 
-                "Final_Draft", 
-                "Image_Path", 
-                "Text_Path", 
+                "Index",
+                "Page",
+                "Original_Text",
+                "Initial_Draft_Text",
+                "Final_Draft",
+                "Image_Path",
+                "Text_Path",
                 "Text_Toggle"
             ])
 
@@ -1564,7 +1565,7 @@ class App(TkinterDnD.Tk):
             os.makedirs(backup_directory, exist_ok=True)
 
             # Load image files
-            image_files = [file for file in os.listdir(self.directory_path) 
+            image_files = [file for file in os.listdir(self.directory_path)
                         if file.lower().endswith((".jpg", ".jpeg"))]
 
             if not image_files:
@@ -1588,7 +1589,7 @@ class App(TkinterDnD.Tk):
                     f.write("")
 
                 page = f"{i:04d}_p{i:03d}"  # Format the page number
-                
+
                 # Create new row as a dictionary
                 new_row = {
                     "Index": i-1,
@@ -1600,7 +1601,7 @@ class App(TkinterDnD.Tk):
                     "Text_Path": text_path,
                     "Text_Toggle": "Original Text"
                 }
-                
+
                 # Add the new row to the DataFrame
                 self.main_df.loc[i-1] = new_row
 
@@ -1612,8 +1613,8 @@ class App(TkinterDnD.Tk):
             else:
                 messagebox.showinfo("No Files", "No files found in the selected directory.")
 
-            self.counter_update()  
-             
+            self.counter_update()
+
     def load_text(self):
         index = self.page_counter
 
@@ -1662,12 +1663,12 @@ class App(TkinterDnD.Tk):
             current_image_path = self.main_df.loc[self.page_counter, 'Image_Path']
             temp_image_name = os.path.basename(current_image_path)
             temp_image_path = os.path.join(single_temp_dir, temp_image_name)
-            
+
             shutil.copy2(current_image_path, temp_image_path)
 
             # Create an instance of ImageSplitter with the temp directory
             image_splitter = ImageSplitter(single_temp_dir)
-            
+
             # Wait for the ImageSplitter window to close
             self.wait_window(image_splitter)
 
@@ -1684,7 +1685,7 @@ class App(TkinterDnD.Tk):
             # Clean up
             if os.path.exists(single_temp_dir):
                 shutil.rmtree(single_temp_dir, ignore_errors=True)
-            
+
             # Show the main window again
             self.deiconify()
 
@@ -1698,10 +1699,10 @@ class App(TkinterDnD.Tk):
         try:
             # Get all edited images from pass_images directory
             edited_images = sorted([f for f in os.listdir(pass_images_dir) if f.endswith(('.jpg', '.jpeg'))])
-            
+
             if edited_images:
                 current_index = self.page_counter
-                
+
                 # Make a backup of the original image
                 backup_path = original_image_path + '.bak'
                 shutil.copy2(original_image_path, backup_path)
@@ -1710,43 +1711,43 @@ class App(TkinterDnD.Tk):
                     # Single image case - just replace the original
                     edited_image_path = os.path.join(pass_images_dir, edited_images[0])
                     shutil.copy2(edited_image_path, original_image_path)
-                    
+
                 else:
                     # Multiple images case
                     # First, shift all existing entries after the current index
                     shift_amount = len(edited_images) - 1
-                    
+
                     # Create a copy of the DataFrame for modification
                     new_df = self.main_df.copy()
-                    
+
                     # Shift existing entries
                     for idx in range(len(self.main_df) - 1, current_index, -1):
                         old_index = idx
                         new_index = idx + shift_amount
-                        
+
                         # Update the Index
                         new_df.loc[new_index] = self.main_df.loc[old_index].copy()
-                        
+
                         # Update the Page number
                         new_page = f"{new_index+1:04d}_p{new_index+1:03d}"
                         new_df.at[new_index, 'Page'] = new_page
-                        
+
                         # Update file paths
                         old_image_path = self.main_df.loc[old_index, 'Image_Path']
                         old_text_path = self.main_df.loc[old_index, 'Text_Path']
-                        
+
                         new_image_name = f"{new_index+1:04d}_p{new_index+1:03d}.jpg"
                         new_text_name = f"{new_index+1:04d}_p{new_index+1:03d}.txt"
-                        
+
                         new_image_path = os.path.join(os.path.dirname(old_image_path), new_image_name)
                         new_text_path = os.path.join(os.path.dirname(old_text_path), new_text_name)
-                        
+
                         # Rename files
                         if os.path.exists(old_image_path):
                             shutil.move(old_image_path, new_image_path)
                         if os.path.exists(old_text_path):
                             shutil.move(old_text_path, new_text_path)
-                        
+
                         new_df.at[new_index, 'Image_Path'] = new_image_path
                         new_df.at[new_index, 'Text_Path'] = new_text_path
 
@@ -1754,22 +1755,22 @@ class App(TkinterDnD.Tk):
                     for i, img_file in enumerate(edited_images):
                         new_index = current_index + i
                         new_page = f"{new_index+1:04d}_p{new_index+1:03d}"
-                        
+
                         # Create paths for new files
                         new_image_name = f"{new_index+1:04d}_p{new_index+1:03d}.jpg"
                         new_text_name = f"{new_index+1:04d}_p{new_index+1:03d}.txt"
-                        
+
                         new_image_path = os.path.join(os.path.dirname(original_image_path), new_image_name)
                         new_text_path = os.path.join(os.path.dirname(original_image_path), new_text_name)
-                        
+
                         # Copy the edited image
                         edited_image_path = os.path.join(pass_images_dir, img_file)
                         shutil.copy2(edited_image_path, new_image_path)
-                        
+
                         # Create blank text file
                         with open(new_text_path, 'w', encoding='utf-8') as f:
                             f.write("")
-                        
+
                         # Create new row
                         new_row = {
                             "Index": new_index,
@@ -1781,7 +1782,7 @@ class App(TkinterDnD.Tk):
                             "Text_Path": new_text_path,
                             "Text_Toggle": "Original Text"
                         }
-                        
+
                         new_df.loc[new_index] = new_row
 
                     # Update the main DataFrame
@@ -1806,7 +1807,7 @@ class App(TkinterDnD.Tk):
             return
 
         # Show warning message
-        if not messagebox.askyesno("Warning", 
+        if not messagebox.askyesno("Warning",
                                 "This action will replace all current images and text with the edited versions. "
                                 "All existing text will be lost. This action cannot be undone. "
                                 "Do you want to continue?"):
@@ -1829,16 +1830,16 @@ class App(TkinterDnD.Tk):
 
             # Create an instance of ImageSplitter with the temp directory
             image_splitter = ImageSplitter(all_temp_dir)
-            
+
             # Wait for the ImageSplitter window to close
             self.wait_window(image_splitter)
 
             if image_splitter.status == "saved":
                 # Reset the application state
                 self.reset_application()
-                
+
                 # Get the pass_images directory path
-                pass_images_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 
+                pass_images_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)),
                                             "util", "subs", "pass_images")
 
                 if not os.path.exists(pass_images_dir):
@@ -1862,15 +1863,15 @@ class App(TkinterDnD.Tk):
             # Clean up
             if os.path.exists(all_temp_dir):
                 shutil.rmtree(all_temp_dir, ignore_errors=True)
-            
+
             # Show the main window again
             self.deiconify()
 
 # Functions for Buttons
-    
+
     def revert_current_page(self):
         index = self.page_counter
-        
+
         if tk.messagebox.askyesno("Revert to Original", "Are you sure you want to revert the current page to the original text? This action cannot be undone."):
             self.main_df.loc[index, 'Final_Draft'] = ""
             self.main_df.loc[index, 'Initial_Draft_Text'] = ""
@@ -1886,12 +1887,12 @@ class App(TkinterDnD.Tk):
         self.page_counter = 0
 
         self.load_text()
-        self.counter_update()         
-                        
+        self.counter_update()
+
     def export(self, export_path):
-        self.toggle_button_state()        
+        self.toggle_button_state()
         combined_text = ""
-        
+
         # Combine all the processed_text values into a single string
         for index, row in self.main_df.iterrows():
             text = self.find_right_text(index)
@@ -1900,7 +1901,7 @@ class App(TkinterDnD.Tk):
                 combined_text += text
             else:
                 combined_text += "\n\n" + text
-        
+
         # Delete instances of three or more newline characters in a row, replacing them with two newline characters
         combined_text = re.sub(r"\n{3,}", "\n\n", combined_text)
 
@@ -1911,11 +1912,11 @@ class App(TkinterDnD.Tk):
         # Save the combined text to the chosen file
         with open(export_path, "w", encoding="utf-8") as f:
             f.write(combined_text)
-        
+
         self.toggle_button_state()
-    
+
     def manual_export(self):
-        self.toggle_button_state()        
+        self.toggle_button_state()
         combined_text = ""
 
         # Use a file dialog to ask the user where to save the exported text
@@ -1924,7 +1925,7 @@ class App(TkinterDnD.Tk):
             filetypes=[("Text files", "*.txt")],
             title="Save Exported Text As"
         )
-        
+
         # Combine all the processed_text values into a single string
         for index, row in self.main_df.iterrows():
             text = self.find_right_text(index)
@@ -1933,7 +1934,7 @@ class App(TkinterDnD.Tk):
                 combined_text += text
             else:
                 combined_text += "\n\n" + text
-        
+
         # Delete instances of three or more newline characters in a row, replacing them with two newline characters
         combined_text = re.sub(r"\n{3,}", "\n\n", combined_text)
 
@@ -1948,18 +1949,18 @@ class App(TkinterDnD.Tk):
         self.toggle_button_state()
 
 # Routing and Variables Functions
-    
+
     async def run_send_to_claude_api(self, system_prompt, user_prompt, temp, image_base64, text_to_process, val_text, engine, index, format_function=False, api_timeout=120):
         loop = asyncio.new_event_loop()
         asyncio.set_event_loop(loop)
-        
+
         try:
             response, index = await self.send_to_claude_api_in_parallel(system_prompt, user_prompt, temp, image_base64, text_to_process, val_text, engine, index, format_function, api_timeout)
         finally:
-            loop.close()      
-        
+            loop.close()
+
         return response, index
-    
+
 # Progress Bar Functions
 
     def create_progress_window(self, title):
@@ -1987,11 +1988,11 @@ class App(TkinterDnD.Tk):
             progress = (processed_rows / total_rows) * 100
             progress_bar['value'] = progress
             progress_label.config(text=f"{progress:.2f}%")
-        
+
         # Update the progress bar and label
         progress_bar.update()
         progress_label.update()
-    
+
     def close_progress_window(self, progress_window):
         # Close the progress window
         progress_window.destroy()
@@ -2113,7 +2114,7 @@ class App(TkinterDnD.Tk):
                 self.navigate_images(direction=0)
                 self.highlight_text()
 
-            self.update_matches_counter()   
+            self.update_matches_counter()
         except Exception as e:
             messagebox.showerror("Error", f"An error occurred while finding matches: {e}")
             self.error_logging(f"An error occurred while finding matches: {e}")
@@ -2129,7 +2130,7 @@ class App(TkinterDnD.Tk):
             self.current_match_label.config(text="Match(s): 0")
 
         self.total_matches_label.config(text=f"/ {len(self.find_replace_matches_df)}")
-    
+
     def find_all_matches(self):
         self.find_matches()
 
@@ -2137,14 +2138,14 @@ class App(TkinterDnD.Tk):
         if not self.find_replace_matches_df.empty:
             self.link_nav = int(self.find_replace_matches_df.iloc[0]["Page"])
             self.navigate_images(direction=0)
-        
-        self.update_matches_counter()    
+
+        self.update_matches_counter()
 
     def go_to_prev_match(self):
         if not self.find_replace_matches_df.empty:
             current_index = self.page_counter
             prev_match_index = self.find_replace_matches_df[self.find_replace_matches_df["Index"] < current_index]["Index"].max()
-            
+
             if not pd.isna(prev_match_index):
                 self.link_nav = int(prev_match_index)
                 self.navigate_images(direction=0)
@@ -2154,7 +2155,7 @@ class App(TkinterDnD.Tk):
         if not self.find_replace_matches_df.empty:
             current_index = self.page_counter
             next_match_index = self.find_replace_matches_df[self.find_replace_matches_df["Index"] > current_index]["Index"].min()
-            
+
             if pd.notna(next_match_index):
                 self.link_nav = int(next_match_index)
                 self.navigate_images(direction=0)
@@ -2187,21 +2188,21 @@ class App(TkinterDnD.Tk):
     def replace_text(self):
         search_term = self.search_entry.get()
         replace_term = self.replace_entry.get()
-        
+
         # Get the current text content
         current_text = self.text_display.get("1.0", tk.END)
-        
+
         # Perform the replacement
         new_text = current_text.replace(search_term, replace_term)
-        
+
         # Update the text display
         self.text_display.delete("1.0", tk.END)
         self.text_display.insert("1.0", new_text)
-        
+
         # Update the DataFrame
         active_category = self.get_active_category(self.page_counter)
         self.main_df.loc[self.page_counter, active_category] = new_text.strip()
-        
+
         # Refresh the highlighting
         self.highlight_text()
 
@@ -2209,12 +2210,12 @@ class App(TkinterDnD.Tk):
         if messagebox.askyesno("Replace All", "Are you sure you want to replace all occurrences? This action cannot be undone."):
             search_term = self.search_entry.get()
             replace_term = self.replace_entry.get()
-            
+
             # Process all matches in the DataFrame
             for index, row in self.find_replace_matches_df.iterrows():
                 active_page = row["Index"]
                 active_category = self.get_active_category(active_page)
-                
+
                 # Get the text content
                 text = self.main_df.loc[active_page, active_category]
                 if pd.notna(text):
@@ -2222,12 +2223,12 @@ class App(TkinterDnD.Tk):
                     new_text = text.replace(search_term, replace_term)
                     # Update the DataFrame
                     self.main_df.loc[active_page, active_category] = new_text
-            
+
             # Update the current display if we're on one of the modified pages
             if self.page_counter in self.find_replace_matches_df["Index"].values:
                 self.load_text()
                 self.highlight_text()
-            
+
             # Update the find/replace matches
             self.find_matches()
 
@@ -2256,7 +2257,7 @@ class App(TkinterDnD.Tk):
                 progress_window, progress_bar, progress_label = self.create_progress_window("Applying HTR to All Pages...")
             elif ai_job == "Correct":
                 progress_window, progress_bar, progress_label = self.create_progress_window("Correcting All Pages...")
-    
+
         if total_rows == 0: # Display a warning if no images are available for processing
             self.close_progress_window(progress_window)
             messagebox.showwarning("No Images", "No images are available for processing.")
@@ -2268,7 +2269,7 @@ class App(TkinterDnD.Tk):
         with ThreadPoolExecutor(max_workers=batch_size) as executor:
             for i in range(0, total_rows, batch_size):
                 batch_df_subset = batch_df.iloc[i:i+batch_size]
-                
+
                 for index, row_data in batch_df_subset.iterrows():
                     image_path = row_data['Image_Path'] # Get the image path from the DataFrame
 
@@ -2318,7 +2319,7 @@ class App(TkinterDnD.Tk):
                         responses_dict[index] = ""  # Store an empty string if an error occurs
                         # Use a messagebox to display an error
                         messagebox.showerror("Error", f"An error occurred while processing row {futures_to_index[future]}: {e}")
-                        self.error_logging(f"HTR Function: An error occurred while processing row {futures_to_index[future]}: {e}")   
+                        self.error_logging(f"HTR Function: An error occurred while processing row {futures_to_index[future]}: {e}")
 
             finally:
                 self.close_progress_window(progress_window)
@@ -2329,13 +2330,13 @@ class App(TkinterDnD.Tk):
                     if row in responses_dict:
                         if responses_dict[row] == "Error":
                             error_count += 1
-                        else:                           
+                        else:
                             if ai_job == "HTR":
                                 self.main_df.at[row, 'Original_Text'] = responses_dict[row]
                                 self.main_df.at[row, 'Text_Toggle'] = "Original Text"
                             elif ai_job == "Correct":
                                 self.main_df.at[row, 'Initial_Draft_Text'] = responses_dict[row]
-                                self.main_df.at[row, 'Text_Toggle'] = "Initial Draft"                            
+                                self.main_df.at[row, 'Text_Toggle'] = "Initial Draft"
                 else:
                     for index, response in responses_dict.items():
                         if response == "Error":
@@ -2361,17 +2362,17 @@ class App(TkinterDnD.Tk):
 # API Calls to OpenAI, Google, and Anthropic to process text and images for transcription and analysis
 
     def send_to_gpt4_api(self, system_prompt, user_prompt, temp, image_base64, text_to_process, val_text, engine, index, formatting_function=False, api_timeout=25.0, max_retries=3, retries=0):
-        
+
         api_key = self.openai_api_key
 
         if api_key is None:
             raise ValueError("OpenAI API key not found in the API_Keys.txt file.")
-       
+
         client = OpenAI(
             api_key=api_key,
             timeout=api_timeout,
             )
-        
+
         if formatting_function:
             populated_user_prompt = f"""{user_prompt}"""
         else:
@@ -2439,9 +2440,9 @@ class App(TkinterDnD.Tk):
                 continue
 
         return "Error", index
-    
+
     def send_to_gemini_api(self, system_prompt, user_prompt, temp, image_path, text_to_process, val_text, engine, index, formatting_function=False, api_timeout=120.0, max_retries=3, retries=0):
-        
+
         genai.configure(api_key=self.google_api_key)
 
         if not self.google_api_key:
@@ -2464,7 +2465,7 @@ class App(TkinterDnD.Tk):
 
         while retries < max_retries:
             try:
-                if image_path is not None: 
+                if image_path is not None:
                     response = model.generate_content([populated_user_prompt, image1],
                         safety_settings={
                             HarmCategory.HARM_CATEGORY_HATE_SPEECH: HarmBlockThreshold.BLOCK_ONLY_HIGH,
@@ -2502,14 +2503,14 @@ class App(TkinterDnD.Tk):
                     continue
             except Exception as e:
                 print(f"Error: {e}")
-                                
+
                 retries += 1
                 continue
 
         return "Error", index
 
-    async def send_to_claude_api_in_parallel(self, system_prompt, user_prompt, temp, image_base64, text_to_process, val_text, engine, index, formatting_function=False, api_timeout=120.0, function_max_retries=3, retries=0):    
-        async with AsyncAnthropic(api_key=self.anthropic_api_key, max_retries=0, timeout=api_timeout) as client:    
+    async def send_to_claude_api_in_parallel(self, system_prompt, user_prompt, temp, image_base64, text_to_process, val_text, engine, index, formatting_function=False, api_timeout=120.0, function_max_retries=3, retries=0):
+        async with AsyncAnthropic(api_key=self.anthropic_api_key, max_retries=0, timeout=api_timeout) as client:
             try:
                 if formatting_function:
                     populated_user_prompt = f"""{user_prompt}"""
@@ -2547,7 +2548,7 @@ class App(TkinterDnD.Tk):
                                     temperature=temp,
                                     timeout=api_timeout,
                                 )
-                            
+
                         else:
                             message = await client.messages.create(
                                     max_tokens=4000,
@@ -2568,7 +2569,7 @@ class App(TkinterDnD.Tk):
                                     temperature=temp,
                                     timeout=api_timeout,
                                 )
-                            
+
                         response = message.content[0].text
 
 
@@ -2596,9 +2597,9 @@ class App(TkinterDnD.Tk):
                 pass
 
         return "Error", index  # Return an empty string and the index when max retries are reached
-    
+
 # Main Loop
-     
+
 if __name__ == "__main__":
 
     app = App()
