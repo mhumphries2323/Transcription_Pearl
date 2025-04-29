@@ -114,7 +114,7 @@ Under the following terms:
 
 If you use this software in your research, please cite:
 ```
-Mark Humphries, 2024. Transcription Pearl 1.0 Beta. Department of History: Wilfrid Laurier University.
+Mark Humphries and Lianne C. Leddy, 2024. Transcription Pearl 1.0 Beta. Department of History: Wilfrid Laurier University.
 ```
 
 If you wish to cite the paper that explores this research cite:
